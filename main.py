@@ -1,4 +1,4 @@
-# Backgrounds
+# Background
 scene.set_background_image(img("""
     7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
         7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7 
@@ -121,3 +121,60 @@ scene.set_background_image(img("""
         f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
         f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f
 """))
+# Player
+returner = sprites.create(img("""
+        . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . 2 2 2 2 2 2 . . . . . . . . . . . . . 
+            . . . . . . . . . . . . 2 2 2 2 2 2 2 2 . . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . 2 2 2 . . 2 2 2 2 2 2 2 2 . . 2 2 2 . . . . . . . 
+            . . . . . . 2 2 2 2 2 2 . . e e e e . . 2 2 2 2 2 2 . . . . . . 
+            . . . . . 2 2 2 2 2 2 2 2 2 e e e e 2 2 2 2 2 2 2 2 2 . . . . . 
+            . . . . . 2 2 2 2 2 2 2 2 2 2 e e 2 2 2 2 2 2 2 2 2 2 . . . . . 
+            . . . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . . . 
+            . . . . . . e e e e 2 2 2 2 2 2 2 2 2 2 2 2 e e e e . . . . . . 
+            . . . . . . e e e e . 2 f f 2 f f 2 f f 2 . e e e e . . . . . . 
+            . . . . . . e e e e . 2 f f 2 f f 2 f f 2 . e e e e . . . . . . 
+            . . . . . . e e e e e 2 f f 2 f f 2 f f 2 e e e e e . . . . . . 
+            . . . . . . . e e e e 2 f f 2 f f f f f 2 e e e e . . . . . . . 
+            . . . . . . . . e e e 2 f f 2 f f f f f 2 e e e . . . . . . . . 
+            . . . . . . . . . . e 2 f f 2 2 2 2 f f 2 e . . . . . . . . . . 
+            . . . . . . . . . . . 2 f f 2 2 2 2 f f 2 . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . . . 2 2 2 2 2 2 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . . . f f f f f f f f f f . . . . . . . . . . . 
+            . . . . . . . . . . . f f f f . . f f f f . . . . . . . . . . . 
+            . . . . . . . . . . . f f f . . . . f f f . . . . . . . . . . . 
+            . . . . . . . . . . . f f f . . . . f f f . . . . . . . . . . . 
+            . . . . . . . . . . . f f f . . . . f f f . . . . . . . . . . . 
+            . . . . . . . . . . . e e e . . . . e e e . . . . . . . . . . . 
+            . . . . . . . . . . . e e e . . . . e e e . . . . . . . . . . . 
+            . . . . . . . . . . 2 2 2 2 . . . 2 2 2 2 . . . . . . . . . . . 
+            . . . . . . . . . 2 2 2 2 2 . . 2 2 2 2 2 . . . . . . . . . . .
+    """),
+    SpriteKind.player)
+mySprite = sprites.create(img("""
+        . . . . . . . . . . . . . . . 
+            . . . . . . e e e . . . . . . 
+            . . . . . e e e e e . . . . . 
+            . . . . . e e 1 e e . . . . . 
+            . . . . e e 1 1 1 e e . . . . 
+            . . . . e e e 1 e e e . . . . 
+            . . . . e e 1 1 1 e e . . . . 
+            . . . . e e e 1 e e e . . . . 
+            . . . . e e 1 1 1 e e . . . . 
+            . . . . e e e 1 e e e . . . . 
+            . . . . e e 1 1 1 e e . . . . 
+            . . . . . e e 1 e e . . . . . 
+            . . . . . e e e e e . . . . . 
+            . . . . . . e e e . . . . . . 
+            . . . . . . . . . . . . . . .
+    """),
+    SpriteKind.projectile)
+controller.move_sprite(returner, 100, 100)
+mySprite.set_position(randint(20, 140), 250)
+mySprite.set_velocity(0,randint(50, 75))
