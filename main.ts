@@ -1,4 +1,29 @@
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
+namespace SpriteKind {
+    export const Football = SpriteKind.create()
+}
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    helmet = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . c c . . . . . . . 
+        . . . . . b b 2 c 2 2 2 . . . . 
+        . . . . . b b b 2 2 2 2 . . . . 
+        . . . . b f b 2 f 2 f 2 . . . . 
+        . . . . f b 2 2 2 f f 2 . . . . 
+        . . . . b 2 2 2 f 2 f 2 . . . . 
+        . . . . 2 2 2 2 f 2 f . . . . . 
+        . . . . . 2 2 2 2 2 2 . . . . . 
+        . . . . . . 2 2 2 . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Projectile)
+    helmet.setPosition(returner.x, returner.y)
+    helmet.follow(mySprite2, 100)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Football, function (sprite, otherSprite) {
     mySprite.destroy()
     info.startCountdown(15)
     for (let index = 0; index < 7; index++) {
@@ -40,10 +65,14 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
         mySprite2.follow(returner, 60)
     }
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    mySprite2.destroy()
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     game.over(false)
 })
 let mySprite2: Sprite = null
+let helmet: Sprite = null
 let mySprite: Sprite = null
 let returner: Sprite = null
 // Player
@@ -97,7 +126,7 @@ mySprite = sprites.create(img`
     . . . . . e e e e e . . . . . 
     . . . . . . e e e . . . . . . 
     . . . . . . . . . . . . . . . 
-    `, SpriteKind.Projectile)
+    `, SpriteKind.Football)
 controller.moveSprite(returner, 100, 100)
 mySprite.setPosition(randint(20, 140), 800)
 mySprite.setVelocity(0, randint(50, 75))
@@ -162,7 +191,7 @@ tiles.setTilemap(tiles.createTilemap(hex`28003c000101010101010101010101010101010
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-    `, [myTiles.transparency16,myTiles.tile1,myTiles.tile2,myTiles.tile3], TileScale.Sixteen))
+    `, [myTiles.transparency16,myTiles.tile1,myTiles.tile2,myTiles.tile3,myTiles.tile4], TileScale.Sixteen))
 scene.cameraFollowSprite(returner)
 returner.setPosition(76, 930)
 let mySprite3 = sprites.create(img`
@@ -184,8 +213,8 @@ let mySprite3 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Food)
 mySprite3.setPosition(0, 70)
-forever(function () {
-    if (mySprite.y < mySprite3.y) {
+game.onUpdateInterval(200, function () {
+    if (returner.y < mySprite3.y) {
         game.over(true, effects.confetti)
     }
 })
